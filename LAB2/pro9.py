@@ -44,6 +44,6 @@ df_norm[columns_minmax] = minmax_scaler.fit_transform(df_norm[columns_minmax])
 standard_scaler = StandardScaler()
 df_norm[columns_standard] = standard_scaler.fit_transform(df_norm[columns_standard])
 
-print("\n✅ Normalization completed.")
+print("\n Normalization completed.")
 print("\nFirst few rows of normalized data:")
 print(df_norm.head())
