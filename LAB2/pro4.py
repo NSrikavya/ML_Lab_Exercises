@@ -29,7 +29,7 @@ for col in numeric_cols:
 print("\n--- 4. Missing Values ---")
 print(df.isnull().sum())
 
-# 5. Outlier Detection (using IQR)
+# 5. Outlier Detection 
 print("\n--- 5. Outliers in Numeric Columns ---")
 for col in numeric_cols:
     Q1 = df[col].quantile(0.25)
