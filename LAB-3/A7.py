@@ -62,7 +62,7 @@ if __name__ == "__main__":
     # Print first 10 predicted vs actual labels for comparison
     print("First 10 Predictions:", y_pred[:10])
     print("Corresponding Actual Labels:", y_test.values[:10])
-    # Optional: Predict the label for a single test vector (first one)
+    # Predict the label for a single test vector (first one)
     test_vector = X_test.iloc[0].values.reshape(1, -1)  
     single_prediction = knn_model.predict(test_vector)
     print(f"Prediction for first test vector: {single_prediction[0]}")
