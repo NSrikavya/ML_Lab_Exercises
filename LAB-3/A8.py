@@ -6,7 +6,7 @@ from sklearn.neighbors import KNeighborsClassifier
 # Load dataset from the specified CSV file path
 def load_data(file_path):
     return pd.read_csv(file_path)
-# Clean column names by removing leading/trailing whitespace
+# Clean column names by removing leading whitespace
 def clean_columns(df):
     df.columns = df.columns.str.strip()
     return df
