@@ -1,48 +1,32 @@
 import pandas as pd
 import numpy as np
 
-# Loading data
-file_path = r"C:\Users\lenovo\OneDrive\Desktop\ML_Lab_Exercises\ML_Lab_Exercises-1\LAB-3\telecom_churn.csv"
-df = pd.read_csv(file_path)
+# Load dataset
+df = pd.read_csv(r"C:\Users\lenovo\OneDrive\Desktop\ML_Lab_Exercises\ML_Lab_Exercises\LAB-3\telecom_churn.csv")
 
-# Function to filter two classes
-def split_classes(df, target_col='Churn'):
-    class1 = df[df[target_col] == True]
-    class2 = df[df[target_col] == False]
-    return class1, class2
+# Select only numerical features
+num_cols = df.select_dtypes(include=[np.number]).columns.tolist()
+X = df[num_cols].values
+y = df["Churn"].astype(int).values  # Convert True/False to 1/0
 
-# Function to get numeric features
-def get_numeric_features(df):
-    return df.select_dtypes(include=[np.float64]).columns.to_list()
+# Separate into two classes
+class0 = X[y == 0]   # Non-churn
+class1 = X[y == 1]   # Churn
 
-# Function to compute centroid (mean vector)
-def compute_centroid(class_data, features):
-    return class_data[features].mean(axis=0)
+# Calculate centroids (mean vectors)
+centroid0 = np.mean(class0, axis=0)
+centroid1 = np.mean(class1, axis=0)
 
-# Function to compute spread (standard deviation vector)
-def compute_spread(class_data, features):
-    return class_data[features].std(axis=0)
+# Calculate spreads (standard deviation vectors)
+spread0 = np.std(class0, axis=0)
+spread1 = np.std(class1, axis=0)
 
-# Function to compute interclass distance
-def compute_interclass_distance(centroid1, centroid2):
-    return np.linalg.norm(centroid1 - centroid2)
+# Calculate interclass distance (Euclidean distance between centroids)
+centroid_distance = np.linalg.norm(centroid0 - centroid1)
 
-# Main execution
-if __name__ == "__main__":
-    class1, class2 = split_classes(df)
-    features = get_numeric_features(df)
-
-    centroid1 = compute_centroid(class1, features)
-    centroid2 = compute_centroid(class2, features)
-
-    spread1 = compute_spread(class1, features)
-    spread2 = compute_spread(class2, features)
-
-    interclass_distance = compute_interclass_distance(centroid1, centroid2)
-
-    # Printing results
-    print("Centroid of Class 1 (Churn=True):\n", centroid1)
-    print("\nCentroid of Class 2 (Churn=False):\n", centroid2)
-    print("\nSpread of Class 1 (Std Dev):\n", spread1)
-    print("\nSpread of Class 2 (Std Dev):\n", spread2)
-    print("\nInterclass Distance:", interclass_distance)
+# Print results
+print("Centroid (Class 0 - Non Churn):", centroid0)
+print("Centroid (Class 1 - Churn):", centroid1)
+print("\nSpread (Class 0 - Non Churn):", spread0)
+print("Spread (Class 1 - Churn):", spread1)
+print("\nInterclass Distance between centroids:", centroid_distance)
