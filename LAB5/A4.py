@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.cluster import KMeans
 # Load dataset
-df = pd.read_csv(r"C:\Users\lenovo\OneDrive\Desktop\ML_Lab_Exercises\ML_Lab_Exercises-3\LAB5\DCT_mal.csv") 
+df = pd.read_csv(r"C:\Users\lenovo\OneDrive\Desktop\ML_Lab_Exercises\ML_Lab_Exercises\LAB5\DCT_mal.csv") 
 # Clustering features (remove LABEL)
 X_cluster = df.drop(columns=['LABEL'])
 # Train KMeans with k=2
