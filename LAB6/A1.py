@@ -18,7 +18,7 @@ def calculate_entropy(data):
     return entropy
 
 # Load dataset
-file_path = r"C:\Users\lenovo\OneDrive\Desktop\ML_Lab_Exercises\ML_Lab_Exercises-3\LAB6\DCT_mal.csv"  # Use uploaded file path
+file_path = r"C:\Users\lenovo\OneDrive\Desktop\ML_Lab_Exercises\ML_Lab_Exercises\LAB6\DCT_mal.csv"
 df = pd.read_csv(file_path)
 
 # Target column
