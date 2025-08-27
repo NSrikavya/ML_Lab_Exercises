@@ -17,11 +17,11 @@ class1 = X[y == 1]   # Churn
 centroid0 = np.mean(class0, axis=0)
 centroid1 = np.mean(class1, axis=0)
 
-# Calculate spreads (standard deviation vectors)
+# Calculate spreads (standard deviation vectors)-"How much customers within the same class differ from their centroid."
 spread0 = np.std(class0, axis=0)
 spread1 = np.std(class1, axis=0)
 
-# Calculate interclass distance (Euclidean distance between centroids)
+# Calculate interclass distance (Euclidean distance between centroids)-"How far apart the centroids of two classes are."
 centroid_distance = np.linalg.norm(centroid0 - centroid1)
 
 # Print results
