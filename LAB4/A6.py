@@ -1,35 +1,47 @@
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
 
-# 1. Load dataset
-data = pd.read_csv(r"C:\Users\lenovo\OneDrive\Desktop\ML_Lab_Exercises\ML_Lab_Exercises\LAB4\DCT_mal.csv")
+# Load dataset
+file_path = r"C:\Users\lenovo\OneDrive\Desktop\ML_Lab_Exercises\ML_Lab_Exercises\LAB4\A7.py"
+df = pd.read_csv(file_path, delimiter="\t")
 
-# 2. Select ONLY two features for visualization (e.g., '0' and '1')
-X = data[["0", "1"]].values   # keep just 2 columns
-y = data["LABEL"].values
+# Features and target
+X = df.drop("LABEL", axis=1).values   # all columns except LABEL
+y = df["LABEL"].values               # target
 
-# 3. Train kNN classifier
-k = 3
-knn = KNeighborsClassifier(n_neighbors=k)
-knn.fit(X, y)
+# Train-test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
 
-# 4. Create meshgrid (only in 2D now)
-x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
-y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
+# k-NN model
+knn = KNeighborsClassifier(n_neighbors=3)
+knn.fit(X_train, y_train)
 
-xx, yy = np.meshgrid(np.arange(x_min, x_max, 0.1),
-                     np.arange(y_min, y_max, 0.1))
+# Predictions
+y_train_pred = knn.predict(X_train)
+y_test_pred = knn.predict(X_test)
 
-# 5. Predict class for each point in the meshgrid
-Z = knn.predict(np.c_[xx.ravel(), yy.ravel()])
-Z = Z.reshape(xx.shape)
+# Evaluation
+print("\n--- Training Evaluation ---")
+print("Confusion Matrix:\n", confusion_matrix(y_train, y_train_pred))
+print(classification_report(y_train, y_train_pred))
 
-# 6. Plot decision boundary + training points
-plt.contourf(xx, yy, Z, alpha=0.3, cmap=plt.cm.coolwarm)
-plt.scatter(X[:, 0], X[:, 1], c=y, cmap=plt.cm.coolwarm, edgecolor="k")
+print("\n--- Testing Evaluation ---")
+print("Confusion Matrix:\n", confusion_matrix(y_test, y_test_pred))
+print(classification_report(y_test, y_test_pred))
+
+print("Train Accuracy:", accuracy_score(y_train, y_train_pred))
+print("Test Accuracy :", accuracy_score(y_test, y_test_pred))
+
+# Visualization (using first 2 features just for plotting)
+plt.figure(figsize=(8, 6))
+plt.scatter(X_train[:, 0], X_train[:, 1], c=y_train, cmap='coolwarm', label="Train")
+plt.scatter(X_test[:, 0], X_test[:, 1], c=y_test_pred, marker='x', cmap='coolwarm', label="Test Prediction")
 plt.xlabel("Feature 0")
 plt.ylabel("Feature 1")
-plt.title(f"kNN (k={k}) on DCT_mal.csv")
+plt.title("k-NN Classification (first 2 features)")
+plt.legend()
+plt.grid(True)
 plt.show()
