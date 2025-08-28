@@ -65,4 +65,4 @@ for k in k_values:
                            "Project Data Decision Boundary",
                            f"project_boundary_k{k}.png")
 
-print("✅ Decision boundary plots saved for k =", k_values)
+print("Decision boundary plots saved for k =", k_values)
