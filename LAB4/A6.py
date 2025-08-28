@@ -7,7 +7,7 @@ from sklearn.neighbors import KNeighborsClassifier
 data = pd.read_csv(r"C:\Users\lenovo\OneDrive\Desktop\ML_Lab_Exercises\ML_Lab_Exercises\LAB4\DCT_mal.csv")
 
 # 2. Select ONLY two features for visualization (e.g., '0' and '1')
-X = data[["0", "1"]].values   # ✅ keep just 2 columns
+X = data[["0", "1"]].values   # keep just 2 columns
 y = data["LABEL"].values
 
 # 3. Train kNN classifier
